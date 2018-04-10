@@ -30,19 +30,19 @@ public class MainActivity extends AppCompatActivity {
         resultado = findViewById(R.id.tresultado);
         datos="";
 
-/*
+
         consultarid.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getAlumnos al=new getAlumnos();
+                al.execute();
             }
-        });*/
-        Hola al=new Hola();
-        al.execute();
+        });
+
 
     }
 
-    private class Hola extends AsyncTask<Void,Void,Void>{
+    private class getAlumnos extends AsyncTask<Void,Void,Void>{
 
         String data="";
         @Override
@@ -51,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
                                 URL url = new URL("http://192.168.0.17/datos1/obtener_alumnos.php");
                                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                                 InputStream inputStream = httpURLConnection.getInputStream();
-                                BufferedReader bufferedReader = new BufferedReader(new
-                                                InputStreamReader(inputStream));
+                                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                                 String line ="";
                                 while (line!=null){
                                         line = bufferedReader.readLine();
@@ -60,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 JSONObject jsonObject = new JSONObject(data);
                                 JSONArray alumnos = new JSONArray(jsonObject.getString("alumnos"));
-                                JSONObject alumnos2;
+                                JSONObject alumnosC;
                                 for(int i=0;i<alumnos.length();i++){
-                                        alumnos2=(JSONObject)alumnos.get(i);
-                                        datos+="id : "+alumnos2.getString("idAlumno")+" nombre: "+alumnos2.getString("nombre")+";";
+                                        alumnosC=(JSONObject)alumnos.get(i);
+                                        datos+="id : "+alumnosC.getString("idAlumno")+" nombre: "+alumnosC.getString("nombre")+";";
                                     }
                             }catch (Exception e){
                                 e.printStackTrace();
@@ -72,20 +71,9 @@ public class MainActivity extends AppCompatActivity {
                     }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
+        protected void onPostExecute(Void a) {
+            super.onPostExecute(a);
             resultado.setText(datos);
         }
-/*
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }*/
     }
 }
