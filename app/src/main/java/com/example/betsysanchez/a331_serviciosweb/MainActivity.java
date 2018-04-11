@@ -72,10 +72,10 @@ public class MainActivity extends AppCompatActivity {
             try{
                 URL url;
                 if(numId.equals("")){
-                    url=new URL("http://192.168.0.17/datos1/obtener_alumnos.php");
+                    url=new URL("http://172.20.8.25/datos1/obtener_alumnos.php");
 
                 }else{
-                    url=new URL("http://192.168.0.17/datos1/obtener_alumno_por_id.php?idalumno="+numId);
+                    url=new URL("http://172.20.8.25/datos1/obtener_alumno_por_id.php?idalumno="+numId);
                 }
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) (url).openConnection();

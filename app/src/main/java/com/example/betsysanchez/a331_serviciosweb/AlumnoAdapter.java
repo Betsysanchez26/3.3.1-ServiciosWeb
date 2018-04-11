@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import org.json.JSONObject;
-
 import java.io.DataOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -43,17 +41,17 @@ public class AlumnoAdapter extends RecyclerView.Adapter<AlumnoAdapter.RecyclerVi
         holder.eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                                Deleting deleting = new Deleting();
-                                deleting.did=id;
-                                deleting.dname=data[position][1];
-                                deleting.daddress=data[position][2];
-                                deleting.execute();
+            Eliminar delete = new Eliminar();
+                delete.did=id;
+                delete.dname=data[position][1];
+                delete.daddress=data[position][2];
+                delete.execute();
                             }
         });
         holder.editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InsertActivity insert = new InsertActivity();
+            InsertActivity insert = new InsertActivity();
                 insert.mid=id;
                 insert.mname=data[position][1];
                 insert.maddress=data[position][2];
@@ -80,14 +78,14 @@ public class AlumnoAdapter extends RecyclerView.Adapter<AlumnoAdapter.RecyclerVi
         }
     }
 
-    private class Deleting extends AsyncTask<Void,Void,Void> {
+    private class Eliminar extends AsyncTask<Void,Void,Void> {
         String did="";
         String dname="";
         String daddress="";
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-                URL url = new URL("http://192.168.0.17/datos1/borrar_alumno.php");
+                URL url = new URL("http://172.20.8.25/datos1/borrar_alumno.php");
                 Log.d("url",url.toString());
                 HttpURLConnection httpURLConnection =(HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -121,8 +119,8 @@ public class AlumnoAdapter extends RecyclerView.Adapter<AlumnoAdapter.RecyclerVi
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(Void v) {
+            super.onPostExecute(v);
         }
     }
 }

@@ -7,9 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import org.json.JSONObject;
-
 import java.io.DataOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -26,7 +24,9 @@ public class InsertActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.insertar_activity);
-        init();
+        name=findViewById(R.id.nuevoNombre);
+        address=findViewById(R.id.NuevoDireccion);
+        save=findViewById(R.id.btnGuardar);
         clean();
         if(!mname.equals("") && !maddress.equals(""))save.setText("Editar");
         else save.setText("Guardar");
@@ -35,22 +35,16 @@ public class InsertActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(mname.equals("") && maddress.equals("")) {
-                    Inserting insert = new Inserting();
+                    Insertar insert = new Insertar();
                     insert.execute();
                 }
                 else {
-                    Modify modify = new Modify();
-                    modify.execute();
+                    Editar editar = new Editar();
+                    editar.execute();
                 }
             }
         });
 
-    }
-
-    private void init(){
-        name=findViewById(R.id.nuevoNombre);
-        address=findViewById(R.id.NuevoDireccion);
-        save=findViewById(R.id.btnGuardar);
     }
     private void clean(){
         name.setText("");
@@ -61,12 +55,12 @@ public class InsertActivity extends AppCompatActivity {
         if(!maddress.equals(""))address.setText(maddress);
     }
 
-    private class Inserting extends AsyncTask<Void,Void,Void> {
+    private class Insertar extends AsyncTask<Void,Void,Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-                URL url = new URL("http://192.168.0.17/datos1/insertar_alumno.php");
+                URL url = new URL("http://172.20.8.25/datos1/insertar_alumno.php");
                 Log.d("url",url.toString());
                 HttpURLConnection httpURLConnection =(HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -99,17 +93,17 @@ public class InsertActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(Void v) {
+            super.onPostExecute(v);
             onBackPressed();
 
         }
     }
-    private class Modify extends AsyncTask<Void,Void,Void> {
+    private class Editar extends AsyncTask<Void,Void,Void> {
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-                URL url = new URL("http://192.168.0.17/datos1/actualizar_alumno.php");
+                URL url = new URL("http://172.20.8.25/datos1/actualizar_alumno.php");
                 Log.d("url",url.toString());
                 HttpURLConnection httpURLConnection =(HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -143,8 +137,8 @@ public class InsertActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(Void v) {
+            super.onPostExecute(v);
             onBackPressed();
         }
     }
